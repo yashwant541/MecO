@@ -1,0 +1,103 @@
+#include<stdio.h>
+#include<malloc.h>
+struct node
+{int data;
+struct node* next;
+};
+struct node *head1,*head2;
+struct node* insert(struct node *head)
+{struct node *temp=(struct node*)malloc(sizeof(struct node));
+scanf("%d",&temp->data);
+temp->next=head;
+head=temp;
+return head;
+}
+void display(struct node* head)
+{
+    if(head==NULL)
+        printf("list is empty\n");
+    else
+    {struct node *temp=head;
+    while(temp!=NULL)
+    {
+        printf("%d ",temp->data);
+        temp=temp->next;
+    }
+
+    }
+}
+void msort()
+{struct node *temp1,*temp2;
+temp1=head1;
+temp2=head2;
+while(temp1->next!=NULL)
+{
+    temp1=temp1->next;}
+    temp1->next=temp2;
+    temp1=head1;
+    while(temp1->next!=NULL)
+    { temp2=temp1->next;
+        while(temp2!=NULL)
+        {
+            if(temp1->data>temp2->data)
+            {
+                int a=temp1->data;
+                temp1->data=temp2->data;
+                temp2->data=a;
+            }
+            temp2=temp2->next;
+        }
+   temp1=temp1->next; }
+}
+int main()
+{
+    head1=NULL;
+    head2=NULL;
+    int choice;
+    char ch='y';
+    while(ch=='y'||ch=='Y')
+    { system("cls");
+        printf("Enter your choice\n");
+    printf("1.Insert n elements into linked list 1 at the beginning\n");
+    printf("2.Insert n elements into linked list 2 at the beginning\n");
+    printf("3.Display elements of linked list 1\n");
+    printf("4.Display elements of linked list 2\n");
+    printf("5.Merge Linked list 1 and 2 in 1\n");
+    printf("6.Exit\n");
+    scanf("%d",&choice);
+    if(choice==1)
+    {int n;
+        printf("enter no of elemnts to be inserted in linked list 1\n");
+scanf("%d",&n);
+printf("Enter %d elements\n",n);
+        while(n--)
+        {head1=insert(head1);}}
+     else if(choice==2)
+    {
+        printf("enter no of elemnts to be inserted in linked list 2\n");
+        int n;
+        scanf("%d",&n);
+        printf("Enter %d elements\n",n);
+        while(n--)
+        {head2=insert(head2);}}
+      else if(choice==3)
+    {
+        display(head1);}
+          else if(choice==4)
+    {
+        display(head2);}
+    else if(choice==5)
+    {
+        msort();
+    }
+       else if(choice==6)
+    {
+        break;
+        }
+        else
+            printf("Wrong choice\n");
+        printf("\nDo you want to cntinue(y/n)\n");
+        fflush(stdin);
+        scanf("%c",&ch);
+    }
+return 0;}
