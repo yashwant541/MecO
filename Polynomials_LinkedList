@@ -1,0 +1,130 @@
+#include<stdio.h>
+#include<malloc.h>
+typedef struct node
+{int coeff;
+int power;
+struct node *next;
+}node;
+node *head1,*head2,*head3;
+node *create(node *head,int c,int p)
+{
+    node *temp=(node *)malloc(sizeof(node));
+    temp->coeff=c;
+    temp->power=p;
+    temp->next=NULL;
+    if(head==NULL)
+        {
+            head=temp;
+            return head;
+        }
+    node *curr=head;
+    while(curr->next!=NULL)
+    {
+        curr=curr->next;
+    }
+    curr->next=temp;
+    return head;
+}
+void display(node *head)
+{
+    if(head==NULL)
+        printf("List is empty\n");
+    else
+    { node *p=head;
+    while(p->next!=NULL)
+    {
+        printf("%dx^%d+",p->coeff,p->power);
+        p=p->next;
+    }
+    printf("%dx^%d",p->coeff,p->power);
+
+    }
+}
+void sort(node *head)
+{if(head==NULL)
+        {printf("List is empty\n");
+        return ;}
+   struct node *temp1,*temp2;
+temp1=head;
+temp2=head;
+while(temp1->next)
+{  temp2=temp1->next;
+    while(temp2)
+    {
+        if(temp1->power<temp2->power)
+        {
+            int swap=temp1->power;
+            temp1->power=temp2->power;
+            temp2->power=swap;
+            int swap2=temp1->coeff;
+            temp1->coeff=temp2->coeff;
+            temp2->coeff=swap2;}
+    temp2=temp2->next;}
+temp1=temp1->next;
+}
+}
+node *add(node *head1,node *head2,node *head3)
+{node *temp1=(node*)malloc(sizeof(node));
+head3=temp1;
+temp1->next=NULL;
+    while(head1->next&&head2->next)
+    {node *temp=(node*)malloc(sizeof(node));
+    temp->next=NULL;
+        if(head1->power>head2->power)
+        {temp->power=head1->power;
+        temp->coeff=head1->coeff;
+        head1=head1->next;}
+       else if(head2->power>head1->power)
+        {temp->power=head2->power;
+        temp->coeff=head2->coeff;
+        head2=head2->next;        }
+    else
+    {
+        temp->power=head1->power;
+        temp->coeff=head1->coeff+head2->coeff;
+        head1=head1->next;
+        head2=head2->next;
+    }
+    temp1->next=temp;
+    temp1=temp;
+    }
+temp1=head3;
+head3=temp1->next;
+free(temp1);
+return head3;
+}
+int main()
+{head1=NULL;
+head2=NULL;
+head3=NULL;
+int n1,i;
+printf("Enter highest degree of the polynomial 1\n");
+scanf("%d",&n1);
+for( i=n1; i>=0; i--)
+{
+    int c;
+    printf("Enter coefficent of the %d power term\n ",i);
+    scanf("%d",&c);
+    head1=create(head1,c,i);
+}
+int n2;
+printf("Enter highest degree of the polynomial 2\n");
+scanf("%d",&n2);
+for(i=n2; i>=0; i--)
+{
+    int c;
+    printf("Enter coefficent of the %d power term\n ",i);
+    scanf("%d",&c);
+    head2=create(head2,c,i);
+}
+sort(head1);
+sort(head2);
+head3=add(head1,head2,head3);
+printf("polynomial 1= ");
+display(head1);
+printf("\npolynomial 2= ");
+display(head2);
+printf("\nPoynomial 1 + polynomial 2= ");
+display(head3);
+return 0;
+}
