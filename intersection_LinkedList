@@ -1,0 +1,184 @@
+#include<stdio.h>
+#include<malloc.h>
+typedef struct node
+{
+    int data;
+    struct node *next;
+} node;
+node* insertl(node *head)
+{
+    int v;
+    scanf("%d",&v);
+    node *temp=(struct node*)malloc(sizeof(struct node));
+    temp->data=v;
+    temp->next=NULL;
+    if(head==NULL)
+    {
+        head=temp;
+    }
+    else
+    {
+        struct node *p=head;
+        while(p->next!=NULL)
+        {
+            p=p->next;
+        }
+        p->next=temp;
+    }
+    return head;
+}
+node* insertlp(node *head,int v)
+{
+    node *temp=(struct node*)malloc(sizeof(struct node));
+    temp->data=v;
+    temp->next=NULL;
+    if(head==NULL)
+    {
+        head=temp;
+    }
+    else
+    {
+        struct node *p=head;
+        while(p->next!=NULL)
+        {
+            p=p->next;
+        }
+        p->next=temp;
+    }
+    return head;
+}
+void display(node *head)
+{
+    if(head==NULL)
+        printf("List is empty\n");
+    else
+    {
+        node *p=head;
+        while(p!=NULL)
+        {
+            printf("%d  ",p->data);
+            p=p->next;
+        }
+    }
+}
+void sort(node *head)
+{
+    node *temp1,*temp2;
+    temp1=head;
+    temp2=head;
+    while(temp1->next)
+    {
+        temp2=temp1->next;
+        while(temp2)
+        {
+            if(temp1->data>temp2->data)
+            {
+                int swap=temp1->data;
+                temp1->data=temp2->data;
+                temp2->data=swap;
+            }
+            temp2=temp2->next;
+        }
+        temp1=temp1->next;
+    }
+}
+node *intersection(node *head1,node *head2,node *head3)
+{
+    sort(head1);
+    sort(head2);
+    while(head1!=NULL&&head2!=NULL)
+    {
+        if(head1->data==head2->data)
+        {
+            head3=insertlp(head3,head1->data);
+            head1=head1->next;
+            head2=head2->next;
+        }
+
+        else if(head1->data>head2->data)
+            head2=head2->next;
+        else
+            head1=head1->next;
+    }
+    return head3;
+}
+node *removedup(node *head)
+{
+    node *temp=head;
+    while(temp->next)
+    {
+        if(temp->data==temp->next->data)
+        {node *p=temp->next;
+         temp->next=p->next;
+         free(p);
+        }
+       temp=temp->next;
+    }
+return head;
+}
+int main()
+{
+    node *head1,*head2,*head3;
+    head1=NULL;
+    head2=NULL;
+    head3=NULL;
+    char ch='y';
+    int choice;
+    while(ch=='y'||ch=='Y')
+    {
+        system("cls");
+        printf("Enter your choice\n");
+        printf("1.enter n elements in linked list 1\n");
+        printf("2.enter n elements in linked list 2\n");
+        printf("3.display elements of linked list 1\n");
+        printf("4.display elements of linked list 2\n");
+        printf("5.Display intersection of linked list 1 and 2\n");
+        fflush(stdin);
+        scanf("%d",&choice);
+        if(choice==1)
+        {
+            int n;
+            printf("enter No of elements\n");
+            scanf("%d",&n);
+            printf("Enter elements\n");
+            int i=0;
+            for( i=0; i<n; i++)
+            {
+                head1=insertl(head1);
+            }
+        }
+        else if(choice==2)
+        {
+            int n;
+            printf("enter No of elements\n");
+            scanf("%d",&n);
+            printf("Enter elements\n");
+            int i=0;
+            for(i=0; i<n; i++)
+            {
+                head2=insertl(head2);
+            }
+        }
+        else if(choice==3)
+        {
+            display(head1);
+        }
+        else if(choice==4)
+        {
+            display(head2);
+        }
+
+        else if(choice==5)
+        {
+            head3=intersection(head1,head2,head3);
+            head3=removedup(head3);
+            display(head3);
+        }
+        else
+            printf("Wrong Choice entered");
+        printf("\nDo you want to Continue(n/y)\n");
+        fflush(stdin);
+        scanf("%c",&ch);
+    }
+    return 0;
+}
