@@ -1,0 +1,250 @@
+Skip to content
+This repository
+Search
+Pull requests
+Issues
+Gist
+ @yashwant541
+ Sign out
+ Watch 0
+  Star 0
+  Fork 0 sraman915/beginning
+ Code  Issues 0  Pull requests 0  Projects 0  Wiki  Pulse  Graphs
+Branch: master Find file Copy pathbeginning/llfull.c
+2c9edc4  2 days ago
+@sraman915 sraman915 Update llfull.c
+1 contributor
+RawBlameHistory     
+231 lines (228 sloc)  4.62 KB
+#include<stdio.h>
+#include<malloc.h>
+struct node{
+int a;
+struct node* next;
+};
+struct node *head;
+void insertb()
+{
+    int v;
+    printf("Enter element\n");
+    scanf("%d",&v);
+    struct node *temp=(struct node*)malloc(sizeof(struct node));
+    temp->a=v;
+    temp->next=head;
+    head=temp;
+}
+void insertl()
+{
+    int v;
+    printf("Enter element\n");
+    scanf("%d",&v);
+    struct node *temp=(struct node*)malloc(sizeof(struct node));
+    temp->a=v;
+    temp->next=NULL;
+    if(head==NULL)
+    {
+        head=temp;
+    }
+    else
+    {struct node *p=head;
+    while(p->next!=NULL)
+    {
+        p=p->next;
+    }
+    p->next=temp;
+    }
+}
+void display()
+{
+    if(head==NULL)
+        printf("List is empty\n");
+    else
+    {struct node *p=head;
+    while(p!=NULL)
+    {
+        printf("%d  ",p->a);
+        p=p->next;
+    }
+
+    }
+}
+void delb()
+{
+    if(head==NULL)
+        printf("NO ELEMENT TO DELETE(EMPTY LIST)\n");
+    else
+    {
+        struct node *p=head;
+        head=p->next;
+        free(p);
+    }
+}
+void dell()
+{
+if(head==NULL)
+printf("List is empty\n");
+else
+{
+struct node* temp=head;
+while(temp->next->next!=NULL)
+{
+    temp=temp->next;
+}
+struct node* p=temp;
+p->next=NULL;
+temp=temp->next;
+free(temp);
+}
+
+}
+void revprint(struct node* temp)
+{if(head==NULL)
+        {printf("List is empty\n");
+        return ;}
+revprint(temp->next);
+printf("%d ",temp->a);
+}
+void reverse()
+{ if(head==NULL)
+        {printf("List is empty\n");
+        return ;}
+else
+{
+  struct node *prev,*current,*next;
+    prev=NULL;
+    current=head;
+    while(current!=NULL)
+        {next=current->next;
+         current->next=prev;
+         prev=current;
+         current=next;}
+    head=prev;
+}}
+void rotateright()
+{if(head==NULL)
+        {printf("List is empty\n");
+        return ;}
+    struct node *temp1,*temp2;
+temp1=head;
+while(temp1->next->next!=NULL)
+{
+    temp1=temp1->next;}
+    temp2=temp1->next;
+    temp1->next=NULL;
+    temp2->next=head;
+    head=temp2;
+    }
+void rotateleft()
+{if(head==NULL)
+        {printf("List is empty\n");
+        return ;}
+    struct node *temp1,*temp2;
+temp1=head;
+while(temp1->next!=NULL)
+{
+    temp1=temp1->next;
+}
+temp2=head;
+head=head->next;
+temp2->next=NULL;
+ temp1->next=temp2;
+    }
+void pairwise()
+{ if(head==NULL)
+        {printf("List is empty\n");
+        return ;}
+    struct node *temp=head;
+  while(temp&&temp->next)
+  {
+      int swap=temp->a;
+      temp->a=temp->next->a;
+      temp->next->a=swap;
+      temp=temp->next->next;
+  }
+}
+void sort(struct node *head)
+{if(head==NULL)
+        {printf("List is empty\n");
+        return ;}
+   struct node *temp1,*temp2;
+temp1=head;
+temp2=head;
+while(temp1->next)
+{  temp2=temp1->next;
+    while(temp2)
+    {
+        if(temp1->a>temp2->a)
+        {
+            int swap=temp1->a;
+            temp1->a=temp2->a;
+            temp2->a=swap;}
+    temp2=temp2->next;}
+temp1=temp1->next;
+}
+}
+int main()
+{
+    head=NULL;
+    int choice,i;
+    char ch='y';
+    while(ch=='y'||ch=='Y')
+    {     system("cls");
+         printf("ENTER YOUR CHOICE\n");
+    printf("1.INSERTION n ELEMENTS AT BEGINNING\n");
+    printf("2.INSERTION n ELEMENTS AT LAST\n");
+    printf("3.DISPLAY THE LIST\n");
+    printf("4.DELETION AT THE BEGINNING\n");
+    printf("5.DELETION AT THE LAST\n");
+    printf("6.PRINT THE LINKED LIST IN REVERSE ORDER\n");
+    printf("7.REVERSE THE LINKED LIST\n");
+    printf("8.ROTATE THE ELEMENTS TOWARDS THE RIGHT\n");
+    printf("9.ROTATE THE ELEMENTS TOWARDS THE LEFT\n");
+    printf("10.PAIRWISE SWAP ELEMENTS\n");
+    printf("11.SORT THE LINKED LIST\n");
+    fflush(stdin);
+    scanf("%d",&choice);
+    if(choice==1)
+    {int n;
+    printf("ENTER NO OF ELEMENTS YOU WANT TO INSERT\n");
+    scanf("%d",&n);
+    for(i=0; i<n; i++)
+    {
+        insertb();
+    }
+    }
+    else if(choice==2)
+    {int n;
+    printf("ENTER NO OF ELEMENTS YOU WANT TO INSERT\n");
+    scanf("%d",&n);
+    for(i=0; i<n; i++)
+    {
+        insertl();
+    }
+    }
+    else if(choice==3)
+        display();
+    else if(choice==4)
+        delb();
+    else if(choice==5)
+        dell();
+    else if(choice==6)
+            revprint(head);
+    else if(choice==7)
+                reverse();
+    else if(choice==8)
+        rotateright();
+    else if(choice==9)
+        rotateleft();
+    else if(choice==10)
+        pairwise();
+    else if(choice==11)
+        sort(head);
+    else
+    printf("INVALID CHOICE\n");
+    printf("\nDO YOU WANT TO PERFORM MORE OPERATIONS(n/y)\n");
+    fflush(stdin);
+    scanf("%c",&ch);
+        }
+return 0;}
+Contact GitHub API Training Shop Blog About
+© 2017 GitHub, Inc. Terms Privacy Security Status Help
