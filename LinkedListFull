@@ -1,21 +1,3 @@
-Skip to content
-This repository
-Search
-Pull requests
-Issues
-Gist
- @yashwant541
- Sign out
- Watch 0
-  Star 0
-  Fork 0 sraman915/beginning
- Code  Issues 0  Pull requests 0  Projects 0  Wiki  Pulse  Graphs
-Branch: master Find file Copy pathbeginning/llfull.c
-2c9edc4  2 days ago
-@sraman915 sraman915 Update llfull.c
-1 contributor
-RawBlameHistory     
-231 lines (228 sloc)  4.62 KB
 #include<stdio.h>
 #include<malloc.h>
 struct node{
@@ -245,6 +227,5 @@ int main()
     fflush(stdin);
     scanf("%c",&ch);
         }
-return 0;}
-Contact GitHub API Training Shop Blog About
-© 2017 GitHub, Inc. Terms Privacy Security Status Help
+return 0;
+}
