@@ -2,10 +2,6 @@
 
 using namespace std;
 
-struct pos(){
-    int x;
-    int y;
-};
 
 int mod(int x){
     if(x<0){return ((-1)*x);}
@@ -33,18 +29,67 @@ int main()
     cin>>n>>k;
     cin>>r>>c;
     ///cout<<"Total movements possible="<<(2*n-2+crossone(r,c,n)+crosstwo(r,c,n))<<endl;
-    
+
     ///INPUT OF K POSITIONS OF OBSTACLES
     ///THEN WE HAVE TO CREATE A TEST FUNCTION OR ALGORITHM TO FILTER OUT ONLY THE NEAREST ONES...REST ALL ARE WASTE
-    
-    
-    
+    int x,y;int right,left,top,down;
+    int hrmin=r-1;
+    int hlmin=n-r;
+    int vtmin=n-c;
+    int vdmin=c-1;
+    for(int i=0;i<k;i++){
+        cin>>x>>y;
+
+
+        if(y==c){
+            if(x<r){
+                right=r-x-1;
+                if(right<hrmin){
+                    hrmin=right;
+                }
+            }
+            else if(x>r){
+                left=x-r-1;
+                if(left<hlmin){
+                    hlmin=left;
+                }
+            }
+        }
+
+
+
+
+        if(x==r){
+            if(y<c){
+                down=c-y-1;
+                if(down<vdmin){
+                    vdmin=down;
+                }
+            }
+            else if(y>c){
+                top=y-c-1;
+                if(top<vtmin){
+                    vtmin=top;
+                }
+            }
+        }
+    }
+    int hmin=hlmin+hrmin;///correct horizontal total moves
+    int vmin=vdmin+vtmin;
+    int total=hmin+vmin;
+    cout<<total<<endl;
+
+
+
+    ///cout<<hmin<<endl;
+
     ///NEED PROGRAM TO BLOCK POSITIONS BEYOND THEM
-    
+
     ///A FUNCTION TO DEFINE THE CATEGORY OF THE OBSTACLE
     ///HORIZONTAL OR VERTICAL
     ///CROSS OR ANTI CROSS
     ///NO EFFECT OBSTACLE
+    /*
     for(int i=0;i<k;i++){
         int x,y;
         cin>>x>>y;
@@ -66,6 +111,9 @@ int main()
                 vdown=n-x-1;
             }
         }
+
     }
+    */
     return 0;
 }
+
