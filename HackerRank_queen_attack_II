@@ -1,0 +1,188 @@
+#include <iostream>
+
+using namespace std;
+
+
+int mod(int x){
+    if(x<0){return ((-1)*x);}
+    else{return x;}
+}
+
+int crossone(int r,int c,int n){
+    int levelo=n-1-mod(r-c);;
+    return levelo;
+}
+
+int crosstwo(int r,int c,int n){
+    int levela=r+c-1;
+    if(levela>n){return ((2*n)-levela-1);}
+    else{return levela-1;}
+}
+
+int main()
+{
+    int n,k,r,c;
+    ///n-size of board nXn
+    ///k-no of obstacles
+    ///r-x-coordinate
+    ///c-y-coordinate
+    cin>>n>>k;
+    cin>>r>>c;
+    ///cout<<"Total movements possible="<<(2*n-2+crossone(r,c,n)+crosstwo(r,c,n))<<endl;
+
+    ///INPUT OF K POSITIONS OF OBSTACLES
+    ///THEN WE HAVE TO CREATE A TEST FUNCTION OR ALGORITHM TO FILTER OUT ONLY THE NEAREST ONES...REST ALL ARE WASTE
+    int x,y;int right,left,top,down;
+    int hrmin=r-1;
+    int hlmin=n-r;
+    int vtmin=n-c;
+    int vdmin=c-1;
+    int axis=crossone(r,c,n);
+    int anaxis=crosstwo(r,c,n);
+    int mintopanti;///SAMPLE IT IS THE MAX CASE NOT CORRECT....****UPDATE REQUIRED BEFORE SUBMISSION****
+    int mintopnanti;///SAMPLE IT IS THE MAX CASE NOT CORRECT....****UPDATE REQUIRED BEFORE SUBMISSION****
+    int mindownanti;///SAMPLE IT IS THE MAX CASE NOT CORRECT....****UPDATE REQUIRED BEFORE SUBMISSION****
+    int mindownnanti;///SAMPLE IT IS THE MAX CASE NOT CORRECT....****UPDATE REQUIRED BEFORE SUBMISSION****
+    int topanti;int downanti;int topnanti;int downnanti;
+    if(r+c<=n/2+1){
+            mintopnanti=r-1;mindownnanti=c-1;
+            cout<<"mintopnanti="<<mintopanti<<" "<<"mindownnanti="<<mindownnanti<<endl;
+        }
+    else if(r+c>n/2+1){
+            mintopnanti=n-c;mindownnanti=n-r;
+            cout<<"mintopnanti="<<mintopnanti<<" "<<"mindownnanti="<<mindownnanti<<endl;
+    }
+    ///
+    if(r>=c){mintopanti=n-r;mindownanti=c-1;}
+    else if(r<c){mintopanti=n-c;mindownanti=r-1;}
+    cout<<"mintopanti="<<mintopanti<<" "<<"mindownanti="<<mindownanti<<endl;
+    ///
+    ///
+    for(int i=0;i<k;i++){
+        cin>>x>>y;
+        ///
+        ///
+        ///
+        ///HORIZONTAL CALCULATION
+        ///
+        ///
+        if(y==c){///CONDITION FOR HORIZONTAL
+            if(x<r){///RIGHT CONDITION
+                right=r-x-1;///CALCULATION OF RIGHT FREE SPACES
+                if(right<hrmin){///TOTAL MIN ,IF ANY RIGHT<MIN THEN THAT WILL BE THE MIN
+                    hrmin=right;
+                }
+            }
+            else if(x>r){///LEFT CONDITION
+                left=x-r-1;
+                if(left<hlmin){///MAKING MIN. OR FINDING THE NEAREST NEIGHBOUR IN LEFT SIDE
+                    hlmin=left;
+                }
+            }
+        }
+        ///
+        ///VERTICAL CALCULATION
+        ///
+        if(x==r){///CONDITION FOR VERTICAL
+            if(y<c){///DOWN CONDITION
+                down=c-y-1;
+                if(down<vdmin){///FINDING THE NEAREST DOWN NEIGHBOUR
+                    vdmin=down;
+                }
+            }
+            else if(y>c){///TOP CONDITION
+                top=y-c-1;
+                if(top<vtmin){///FINDING THE NEAREST TOP NEIGHBOUR
+                    vtmin=top;
+                }
+            }
+        }
+        ///
+        ///ANTI TOP CALCULATION OR TOP I CALCULATION
+        ///
+        if(mod(y-x)==mod(r-c)){///ANTI CONDITION
+            if(r>=c){///BELOW THE DIVIDER LINE
+                if(x>r){///
+                    topanti=mod(r-x)-1;
+                    if(topanti<mintopanti){
+                        mintopanti=topanti;
+                    }
+                }
+                else if(x<r){
+                    downanti=mod(r-x)-1;
+                    if(downanti<mindownanti){
+                        mindownanti=downanti;
+                    }
+                }
+            }
+            else if(r<c){///
+                if(x>r){
+                    topanti=mod(c-y)-1;
+                    if(topanti<mintopanti){
+                        mintopanti=topanti;
+                    }
+                }
+                else if(x<r){
+                    downanti=mod(c-y)-1;
+                    if(downanti<mindownanti){
+                        mindownanti=downanti;
+                    }
+                }
+            }
+        }
+        ///
+        ///CALCULATION OF NANTI OBSTACLE ALLOWED MOVING SPACES
+        ///
+        if(x+y==r+c){
+                if(x>r){///DOWN OF QUEEN
+                    topnanti=mod(r-x)-1;
+                    if(topnanti<mintopnanti){
+                        mintopnanti=topnanti;
+                    }
+                }
+                else if(x<r){///TOP OF QUEEN
+                    downnanti=mod(r-x)-1;
+                    if(downnanti<mindownnanti){
+                        mindownnanti=downnanti;
+                    }
+                }
+        }
+    }
+    ///TOTAL OF ANTI WAY
+    int antimin=mintopanti+mindownanti;
+    cout<<"ANTI="<<antimin<<" "<<"ANTI MINTOP="<<mintopanti<<" "<<"ANTI MINDOWN="<<mindownanti<<endl;
+    ///TOTAL OF NANTI WAY
+    int nantimin=mintopnanti+mindownnanti;
+    cout<<"NANTI="<<nantimin<<" "<<"NANTI MINTOP="<<mintopnanti<<" "<<"NANTI MINDOWN="<<mindownnanti<<endl;
+    ///TOTAL OF HORIZONTAL WAY
+    int hmin=hlmin+hrmin;///correct horizontal total moves
+    cout<<"hmin="<<hmin<<" "<<"hlmin="<<hlmin<<" "<<"hrmin="<<hrmin<<endl;
+    ///TOTAL OF VERTICAL WAY
+    int vmin=vdmin+vtmin;
+    cout<<"vmin="<<vmin<<" "<<"vtmin="<<vtmin<<" "<<"vdmin="<<vdmin<<endl;
+    ///****ALL TOTAL OR SUM OF ALL FOUR****////
+    if(k!=0){
+        int total=hmin+vmin+antimin+nantimin;
+        cout<<total<<endl;
+    }
+    else if(k==0){
+        int total=hmin+vmin+axis+anaxis;
+        cout<<total<<endl;
+    }
+    ///
+    ///
+    ///
+    ///
+    ///
+    ///NOW CALCULATE THE CROSS AND ANTI CROSS OBSTACLE INCLUDED MOVEMENTS IN THE FOR LOOP ABOVE
+    ///PLAN FOR THE VICTORY OF ANTI AND ANANTI LINES
+    ///1.LOOK FOR THE CONDITION DEFINING ITS LINES
+
+    ///cout<<hmin<<endl;
+    ///NEED PROGRAM TO BLOCK POSITIONS BEYOND THEM
+    ///A FUNCTION TO DEFINE THE CATEGORY OF THE OBSTACLE
+    ///HORIZONTAL OR VERTICAL
+    ///CROSS OR ANTI CROSS
+    ///NO EFFECT OBSTACLE
+    return 0;
+}
